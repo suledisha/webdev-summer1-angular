@@ -34,4 +34,23 @@ export class SectionServiceClient {
       }
     });
   }
+  deleteSection(sectionId) {
+    const url = 'http://localhost:4000/api/section/' + sectionId;
+    return fetch(url, {
+      method: 'delete',
+      credentials: 'include'
+    });
+  }
+  saveSection(sectionId, name, seats) {
+    const url = 'http://localhost:4000/api/section/' + sectionId;
+    const section = {sectionId, name, seats};
+    return fetch(url, {
+      method: 'put',
+      body: JSON.stringify(section),
+      credentials: 'include',
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+  }
 }
