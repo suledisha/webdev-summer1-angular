@@ -47,4 +47,16 @@ export class UserServiceClient {
       }
     });
   }
+  update(_id, username, firstName, lastName, email) {
+    const url = 'http://localhost:4000/api/profile';
+    const user = {_id, username, firstName, lastName, email};
+    return fetch(url, {
+      method: 'put',
+      body: JSON.stringify(user),
+      credentials: 'include',
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+  }
 }

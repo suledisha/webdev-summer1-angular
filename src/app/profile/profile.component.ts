@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../models/user.model.client";
-import {UserServiceClient} from "../services/user.service.client";
-import {Router} from "@angular/router";
-import {SectionServiceClient} from "../services/section.service.client";
+import {User} from '../models/user.model.client';
+import {UserServiceClient} from '../services/user.service.client';
+import {Router} from '@angular/router';
+import {SectionServiceClient} from '../services/section.service.client';
 
 @Component({
   selector: 'app-profile',
@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit {
               private router: Router) { }
 
   user = {};
+  _id;
   username;
   password;
   firstName;
@@ -23,9 +24,6 @@ export class ProfileComponent implements OnInit {
   email;
   sections = [];
 
-  update(user) {
-    console.log(user);
-  }
 
   logout() {
     this.service
@@ -35,11 +33,25 @@ export class ProfileComponent implements OnInit {
 
   }
 
+
+  update() {
+    // console.log(user);
+    this.service
+      .update(this._id, this.username, this.firstName, this.lastName, this.email);
+
+  }
+
   ngOnInit() {
     this.service
       .profile()
-      .then(user =>
-        this.username = user.username);
+      .then(user => {
+      this._id = user._id;
+      this.username = user.username;
+      this.firstName = user.firstName;
+      this.lastName = user.lastName;
+      this.email = user.email;
+        console.log(user._id);
+      });
 
     this.sectionService
       .findSectionsForStudent()
