@@ -5,6 +5,20 @@ export class UserServiceClient {
       .then(response => response.json());
   }
 
+  findUserByUsername(username) {
+    const credentials = {
+      username: username
+    };
+    return fetch('http://localhost:4000/api/register', {
+      method: 'post',
+      body: JSON.stringify(credentials),
+      credentials: 'include', // include, same-origin, *omit
+      headers: {
+        'content-type': 'application/json'
+      }
+    }) .then(response => response.json());
+  }
+
   profile() {
     return fetch('http://localhost:4000/api/profile',
       {
@@ -24,7 +38,7 @@ export class UserServiceClient {
       headers: {
         'content-type': 'application/json'
       }
-    });
+    }).then(response => response.json());
     }
   logout() {
     return fetch('http://localhost:4000/api/logout', {
