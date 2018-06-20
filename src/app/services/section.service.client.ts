@@ -1,14 +1,14 @@
 export class SectionServiceClient {
 
   SECTION_URL = 'http://localhost:4000/api/course/COURSEID/section';
-  STUDENT_URL= 'http://localhost:4000/api/student/section';
-  SECTION_URL2= 'http://localhost:4000/api/section';
+  STUDENT_URL = 'http://localhost:4000/api/student/section';
+  SECTION_URL2 = 'http://localhost:4000/api/section';
 
   // https://sule-disha-nodejs-server.herokuapp.com/
 
   SECTION_URL_HEROKU = 'https://sule-disha-nodejs-server.herokuapp.com/api/course/COURSEID/section';
-  STUDENT_URL_HEROKU= 'https://sule-disha-nodejs-server.herokuapp.com/api/student/section';
-  SECTION_URL2_HEROKU= 'https://sule-disha-nodejs-server.herokuapp.com/api/section';
+  STUDENT_URL_HEROKU = 'https://sule-disha-nodejs-server.herokuapp.com/api/student/section';
+  SECTION_URL2_HEROKU = 'https://sule-disha-nodejs-server.herokuapp.com/api/section';
 
 
 
@@ -21,8 +21,9 @@ export class SectionServiceClient {
   }
 
   enrollStudentInSection(sectionId) {
-    //const url = 'http://localhost:4000/api/student/section';
-    return fetch(this.STUDENT_URL_HEROKU, {
+    // const url = 'http://localhost:4000/api/student/section';
+    const url = this.SECTION_URL2_HEROKU + '/' + sectionId + '/enrollment';
+    return fetch(url, {
       method: 'post',
       credentials: 'include'
     });
