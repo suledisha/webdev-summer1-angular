@@ -16,6 +16,7 @@ export class SectionListComponent implements OnInit {
 
   sectionName = '';
   seats = '';
+  maxSeats = '';
   courseId = '';
   sections = [];
   loadSections(courseId) {
@@ -25,16 +26,6 @@ export class SectionListComponent implements OnInit {
       .findSectionsForCourse(courseId)
       .then(sections => this.sections = sections);
   }
-
-  createSection(sectionName, seats) {
-    this
-      .service
-      .createSection(this.courseId, sectionName, seats)
-      .then(() => {
-        this.loadSections(this.courseId);
-      });
-  }
-
   enroll(section) {
     // alert(section._id);
     this.service

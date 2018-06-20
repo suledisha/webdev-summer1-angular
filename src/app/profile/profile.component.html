@@ -20,13 +20,16 @@
 
   <h2>Sections ({{sections.length}})</h2>
 
-  <ul class="list-group">
-    <li *ngFor="let enrollment of sections" class="list-group-item">
-      {{enrollment.section.name}}
-      ({{enrollment.section.seats}})
-      <button class="btn btn-danger">remove</button>
-    </li>
-  </ul>
+  <div *ngFor="let course of courses">
+    <ul class="list-group">
+      <div *ngFor="let enrollment of sections">
+        <li class="list-group-item" *ngIf="course.id===enrollment.section.courseId">
+          <a routerLink='/course/{{course.id}}/section'> Course : {{course.title}} Section: {{enrollment.section.name}} </a>
+          <button (click)="unenroll(enrollment.section._id)" class="btn btn-danger">Un-Enroll</button>
+        </li>
+      </div>
+    </ul>
+  </div>
 
   <a (click)="logout()">Logout</a>
   <a routerLink="/home">Home</a>

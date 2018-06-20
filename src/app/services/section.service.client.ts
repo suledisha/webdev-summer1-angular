@@ -17,14 +17,21 @@ export class SectionServiceClient {
       credentials: 'include'
     });
   }
+  unenrollStudentInSection(sectionId){
+    const url = 'http://localhost:4000/api/section/' + sectionId + '/unenrollment';
+    return fetch(url, {
+      method: 'delete',
+      credentials: 'include'
+    });
+  }
 
   findSectionsForCourse(courseId) {
     return fetch(this.SECTION_URL.replace('COURSEID', courseId))
       .then(response => response.json());
   }
 
-  createSection(courseId, name, seats) {
-    const section = {courseId, name, seats};
+  createSection(courseId, name, seats, maxSeats) {
+    const section = {courseId, name, seats, maxSeats};
     return fetch(this.SECTION_URL.replace('COURSEID', courseId), {
       method: 'post',
       body: JSON.stringify(section),
@@ -41,9 +48,9 @@ export class SectionServiceClient {
       credentials: 'include'
     });
   }
-  saveSection(sectionId, name, seats) {
+  saveSection(sectionId, name, seats, maxSeats) {
     const url = 'http://localhost:4000/api/section/' + sectionId;
-    const section = {sectionId, name, seats};
+    const section = {sectionId, name, seats, maxSeats};
     return fetch(url, {
       method: 'put',
       body: JSON.stringify(section),
