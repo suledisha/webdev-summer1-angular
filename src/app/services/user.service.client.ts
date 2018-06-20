@@ -1,7 +1,10 @@
 export class UserServiceClient {
 
+  URL = 'http://localhost:4000';
+  URL_HEROKU = 'https://sule-disha-nodejs-server.herokuapp.com';
+
   findUserById(userId) {
-    return fetch('http://localhost:4000/api/user/' + userId)
+    return fetch(this.URL_HEROKU + '/api/user/' + userId)
       .then(response => response.json());
   }
 
@@ -9,7 +12,7 @@ export class UserServiceClient {
     const credentials = {
       username: username
     };
-    return fetch('http://localhost:4000/api/register', {
+    return fetch(this.URL_HEROKU + '/api/register', {
       method: 'post',
       body: JSON.stringify(credentials),
       credentials: 'include', // include, same-origin, *omit
@@ -20,7 +23,7 @@ export class UserServiceClient {
   }
 
   profile() {
-    return fetch('http://localhost:4000/api/profile',
+    return fetch(this.URL_HEROKU + '/api/profile',
       {
         credentials: 'include', // include, same-origin, *omit
       })
@@ -31,7 +34,7 @@ export class UserServiceClient {
       username : username,
       password: password
     };
-    return fetch('http://localhost:4000/api/login', {
+    return fetch(this.URL_HEROKU + '/api/login', {
       method: 'post',
       body: JSON.stringify(credentials),
       credentials: 'include', // include, same-origin, *omit
@@ -41,7 +44,7 @@ export class UserServiceClient {
     }).then(response => response.json());
     }
   logout() {
-    return fetch('http://localhost:4000/api/logout', {
+    return fetch(this.URL_HEROKU + '/api/logout', {
       method: 'post',
       credentials: 'include', // include, same-origin, *omit
     });
@@ -52,7 +55,7 @@ export class UserServiceClient {
       username: username,
       password: password
     };
-    return fetch('http://localhost:4000/api/user', {
+    return fetch(this.URL_HEROKU + '/api/user', {
       body: JSON.stringify(user),
       credentials: 'include', // include, same-origin, *omit
       method: 'post',
@@ -62,7 +65,7 @@ export class UserServiceClient {
     });
   }
   update(_id, username, firstName, lastName, email) {
-    const url = 'http://localhost:4000/api/profile';
+    const url = this.URL_HEROKU + '/api/profile';
     const user = {_id, username, firstName, lastName, email};
     return fetch(url, {
       method: 'put',
