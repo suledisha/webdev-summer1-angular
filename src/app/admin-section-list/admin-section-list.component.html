@@ -23,7 +23,7 @@
   <br>
   <ul class="list-group">
     <li *ngFor="let section of sections" class="list-group-item">
-      {{section.name}} {{section.seats}} {{section.maxSeats}}
+      Name: {{section.name}} Available Seats: {{section.seats}} Maximum Seats: {{section.maxSeats}}
       <button (click)="setSection(section.name, section.seats, section.maxSeats, section._id)"
               class="float-right btn btn-primary">Edit</button>&nbsp; &nbsp;
       <button (click)= "deleteSection(section._id)" class="float-right btn btn-danger">Delete</button>
