@@ -1,21 +1,26 @@
 <div class="container-fluid">
   <h1>Register</h1>
-
+  <br>
   <input [(ngModel)]="username"
          placeholder="username"
          class="form-control"/>
+  <br>
   <input [(ngModel)]="password"
          placeholder="password"
          class="form-control"/>
+  <br>
   <input [(ngModel)]="password2"
          placeholder="verify password"
          class="form-control"/>
+  <br>
   <button (click)="register(username, password, password2)"
           class="btn btn-primary btn-block">
     Register
   </button>
-
-  <a routerLink="/login">Login</a>
-  <a routerLink="/home">Home</a>
-
+  <div class="float-left">
+    <a routerLink="/login">Login</a>
+  </div>
+  <div class="float-right">
+    <a routerLink="/home">Home</a>
+  </div>
 </div>

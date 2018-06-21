@@ -20,13 +20,16 @@ export class AdminSectionListComponent implements OnInit {
   seats = '';
   sectionId = '';
   courseId = '';
-  courseName = '';
+  // courseName = '';
   sections = [];
   maxSeats = '';
   loadSections(courseId) {
     this.courseId = courseId;
     this.courseService.findCourseById(courseId)
-      .then(course => this.courseName= course.title);
+      .then(course => {
+        if (course.status !== 400) {
+          this.sectionName = course.title + ' Section 1';
+        }});
     this
       .service
       .findSectionsForCourse(courseId)

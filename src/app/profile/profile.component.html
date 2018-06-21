@@ -4,34 +4,40 @@
   <input [(ngModel)]="username"
          placeholder="username"
          class="form-control"/>
+  <br>
   <input [(ngModel)]="firstName"
          placeholder="first name"
          class="form-control"/>
+  <br>
   <input [(ngModel)]="lastName"
          placeholder="lastName"
          class="form-control"/>
+  <br>
   <input [(ngModel)]="email"
          placeholder="email"
          class="form-control"/>
+  <br>
   <button (click)="update()"
           class="btn btn-primary btn-block">
     Update
   </button>
-
+  <br>
   <h2>Sections ({{sections.length}})</h2>
-
+  <br>
   <div *ngFor="let course of courses">
     <ul class="list-group">
       <div *ngFor="let enrollment of sections">
         <li class="list-group-item" *ngIf="course.id===enrollment.section.courseId">
           <a routerLink='/course/{{course.id}}/section'> Course : {{course.title}} Section: {{enrollment.section.name}} </a>
-          <button (click)="unenroll(enrollment.section._id)" class="btn btn-danger">Un-Enroll</button>
+          <button (click)="unenroll(enrollment.section._id)" class="float-right btn btn-danger">Un-Enroll</button>
         </li>
       </div>
     </ul>
   </div>
-
-  <a (click)="logout()">Logout</a>
+  <br>
+  <button class="btn btn-success" (click)="logout()">Logout</button>
+  &nbsp; &nbsp;
   <a routerLink="/home">Home</a>
+  &nbsp; &nbsp;
   <a routerLink="/admin" *ngIf="username==='admin'">Admin Page</a>
 </div>

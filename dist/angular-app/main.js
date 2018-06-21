@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".list-group-item.active.webdev {\r\n  z-index: 2;\r\n  color: #fff;\r\n  background-color: #8cbaff;\r\n  border-color: #3b1dff;\r\n}\r\n"
 
 /***/ }),
 
@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-4\">\n    <ul class=\"list-group\">\n      <li class=\"list-group-item active\">Course</li>\n      <li [ngClass]=\"{'active': course.id == courseId}\"\n          (click)=\"loadSections(course.id)\"\n          *ngFor=\"let course of courses\"\n          class=\"list-group-item\">\n        <a routerLink=\"/course/{{course.id}}/sections\">\n          {{course.title}}</a>\n      </li>\n    </ul>\n  </div>\n  <div class=\"col-8\">\n    <app-admin-section-list></app-admin-section-list>\n  </div>\n</div>\n<a routerLink=\"/home\">Home</a>\n<a routerLink=\"/profile\">Profile</a>\n"
+module.exports = "<div class=\"container-fluid\">\n  <a routerLink=\"/home\">Home</a> &nbsp;&nbsp; <a routerLink=\"/profile\">Profile</a>\n  <br>\n  <br>\n  <h1>Admin Page</h1>\n<div class=\"row\">\n  <div class=\"col-4\">\n    <ul class=\"list-group\">\n      <li class=\"list-group-item active\">Course</li>\n      <li [ngClass]=\"{'active webdev': course.id == courseId}\"\n          (click)=\"loadSections(course.id)\"\n          *ngFor=\"let course of courses\"\n          class=\"list-group-item\">\n        <a routerLink=\"/course/{{course.id}}/sections\">\n          {{course.title}}</a>\n      </li>\n    </ul>\n  </div>\n  <div class=\"col-8\">\n    <app-admin-section-list></app-admin-section-list>\n  </div>\n</div>\n</div>\n"
 
 /***/ }),
 
@@ -125,7 +125,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <h1>Sections for course: {{courseId}}</h1>\n  <input [(ngModel)]=\"sectionName\"\n         value=\"{{courseName}} Section 1\"\n         placeholder=\"Section Name\"\n         class=\"form-control\">\n  <input [(ngModel)]=\"seats\"\n         placeholder=\"Seats available\"\n         class=\"form-control\">\n  <input [(ngModel)]=\"maxSeats\"\n         placeholder=\"Max Seats\"\n         class=\"form-control\">\n  <button (click)=\"createSection(sectionName, seats, maxSeats)\" class=\"btn btn-success btn-block\">\n    Add Section\n  </button>\n  <button (click)=\"saveSection()\" class=\"btn btn-success btn-block\">\n    Save Section\n  </button>\n\n  <ul class=\"list-group\">\n    <li *ngFor=\"let section of sections\" class=\"list-group-item\">\n      {{section.name}} {{section.seats}} {{section.maxSeats}}\n      <button (click)=\"setSection(section.name, section.seats, section.maxSeats, section._id)\"\n              class=\"float-right btn btn-primary\">Edit</button>\n      <button (click)= \"deleteSection(section._id)\" class=\"float-right btn btn-danger\">Delete</button>\n    </li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <h1>Sections for course: {{courseId}}</h1>\n  <br>\n  <input [(ngModel)]=\"sectionName\"\n         placeholder=\"Section Name\"\n         class=\"form-control\">\n  <br>\n  <input [(ngModel)]=\"seats\"\n         placeholder=\"Seats available\"\n         class=\"form-control\">\n  <br>\n  <input [(ngModel)]=\"maxSeats\"\n         placeholder=\"Max Seats\"\n         class=\"form-control\">\n  <br>\n  <button (click)=\"createSection(sectionName, seats, maxSeats)\" class=\"btn btn-success btn-block\">\n    Add Section\n  </button>\n  <br>\n  <button (click)=\"saveSection()\" class=\"btn btn-success btn-block\">\n    Save Section\n  </button>\n  <br>\n  <ul class=\"list-group\">\n    <li *ngFor=\"let section of sections\" class=\"list-group-item\">\n      {{section.name}} {{section.seats}} {{section.maxSeats}}\n      <button (click)=\"setSection(section.name, section.seats, section.maxSeats, section._id)\"\n              class=\"float-right btn btn-primary\">Edit</button>&nbsp; &nbsp;\n      <button (click)= \"deleteSection(section._id)\" class=\"float-right btn btn-danger\">Delete</button>\n    </li>\n  </ul>\n</div>\n"
 
 /***/ }),
 
@@ -167,7 +167,7 @@ var AdminSectionListComponent = /** @class */ (function () {
         this.seats = '';
         this.sectionId = '';
         this.courseId = '';
-        this.courseName = '';
+        // courseName = '';
         this.sections = [];
         this.maxSeats = '';
         this.route.params.subscribe(function (params) { return _this.loadSections(params['courseId']); });
@@ -176,7 +176,11 @@ var AdminSectionListComponent = /** @class */ (function () {
         var _this = this;
         this.courseId = courseId;
         this.courseService.findCourseById(courseId)
-            .then(function (course) { return _this.courseName = course.title; });
+            .then(function (course) {
+            if (course.status !== 400) {
+                _this.sectionName = course.title + ' Section 1';
+            }
+        });
         this
             .service
             .findSectionsForCourse(courseId)
@@ -467,7 +471,7 @@ module.exports = ".card {\r\n  margin-bottom: 15px;\r\n}\r\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2>Course Grid ({{courses.length}})</h2>\n\n<div class=\"row\">\n  <div *ngFor=\"let course of courses\" class=\"col-sm-3\">\n    <div class=\"card\">\n      <div class=\"card-body\">\n        <h5 class=\"card-title\">{{course.title}}</h5>\n        <p class=\"card-text\">Course Details</p>\n        <a routerLink=\"/course/{{course.id}}\" class=\"btn btn-primary\">Go to Course</a>\n        <br>\n        <a routerLink=\"/course/{{course.id}}/section\" class=\"btn btn-primary\">Enroll</a>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<h2>Course Grid ({{courses.length}})</h2>\n\n<div class=\"row\">\n  <div *ngFor=\"let course of courses\" class=\"col-sm-3\">\n    <div class=\"card\">\n      <div class=\"card-body\">\n        <h5 class=\"card-title\">{{course.title}}</h5>\n        <p class=\"card-text\">Course Details</p>\n        <a routerLink=\"/course/{{course.id}}\" class=\"btn btn-primary\">Go to Course</a>\n        &nbsp; &nbsp;\n        <a routerLink=\"/course/{{course.id}}/section\" class=\"btn btn-primary\">Enroll</a>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -623,7 +627,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <h2>{{course.title}}</h2>\n  <app-module-list></app-module-list>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <a routerLink=\"/home\">Home</a>\n  <br>\n  <br>\n  <h2>{{course.title}}</h2>\n  <app-module-list></app-module-list>\n</div>\n"
 
 /***/ }),
 
@@ -908,7 +912,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <h1>Login</h1>\n\n  <input [(ngModel)]=\"username\"\n         placeholder=\"username\"\n         class=\"form-control\"/>\n  <input [(ngModel)]=\"password\"\n         placeholder=\"password\"\n         class=\"form-control\"/>\n  <button (click)=\"login(username, password)\"\n          class=\"btn btn-primary btn-block\">\n    Login\n  </button>\n\n  <a routerLink=\"/register\">Register</a>\n  <a routerLink=\"/home\">Home</a>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <h1>Login</h1>\n  <br>\n  <input [(ngModel)]=\"username\"\n         placeholder=\"username\"\n         class=\"form-control\"/>\n  <br>\n  <input [(ngModel)]=\"password\"\n         placeholder=\"password\"\n         class=\"form-control\"/>\n  <br>\n  <button (click)=\"login(username, password)\"\n          class=\"btn btn-primary btn-block\">\n    Login\n  </button>\n  <div class=\"float-left\">\n  <a routerLink=\"/register\">Register</a>\n  </div>\n  <div class=\"float-right\">\n  <a routerLink=\"/home\">Home</a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1094,7 +1098,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <h1>Profile</h1>\n\n  <input [(ngModel)]=\"username\"\n         placeholder=\"username\"\n         class=\"form-control\"/>\n  <input [(ngModel)]=\"firstName\"\n         placeholder=\"first name\"\n         class=\"form-control\"/>\n  <input [(ngModel)]=\"lastName\"\n         placeholder=\"lastName\"\n         class=\"form-control\"/>\n  <input [(ngModel)]=\"email\"\n         placeholder=\"email\"\n         class=\"form-control\"/>\n  <button (click)=\"update()\"\n          class=\"btn btn-primary btn-block\">\n    Update\n  </button>\n\n  <h2>Sections ({{sections.length}})</h2>\n\n  <div *ngFor=\"let course of courses\">\n    <ul class=\"list-group\">\n      <div *ngFor=\"let enrollment of sections\">\n        <li class=\"list-group-item\" *ngIf=\"course.id===enrollment.section.courseId\">\n          <a routerLink='/course/{{course.id}}/section'> Course : {{course.title}} Section: {{enrollment.section.name}} </a>\n          <button (click)=\"unenroll(enrollment.section._id)\" class=\"btn btn-danger\">Un-Enroll</button>\n        </li>\n      </div>\n    </ul>\n  </div>\n\n  <a (click)=\"logout()\">Logout</a>\n  <a routerLink=\"/home\">Home</a>\n  <a routerLink=\"/admin\" *ngIf=\"username==='admin'\">Admin Page</a>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <h1>Profile</h1>\n\n  <input [(ngModel)]=\"username\"\n         placeholder=\"username\"\n         class=\"form-control\"/>\n  <br>\n  <input [(ngModel)]=\"firstName\"\n         placeholder=\"first name\"\n         class=\"form-control\"/>\n  <br>\n  <input [(ngModel)]=\"lastName\"\n         placeholder=\"lastName\"\n         class=\"form-control\"/>\n  <br>\n  <input [(ngModel)]=\"email\"\n         placeholder=\"email\"\n         class=\"form-control\"/>\n  <br>\n  <button (click)=\"update()\"\n          class=\"btn btn-primary btn-block\">\n    Update\n  </button>\n  <br>\n  <h2>Sections ({{sections.length}})</h2>\n  <br>\n  <div *ngFor=\"let course of courses\">\n    <ul class=\"list-group\">\n      <div *ngFor=\"let enrollment of sections\">\n        <li class=\"list-group-item\" *ngIf=\"course.id===enrollment.section.courseId\">\n          <a routerLink='/course/{{course.id}}/section'> Course : {{course.title}} Section: {{enrollment.section.name}} </a>\n          <button (click)=\"unenroll(enrollment.section._id)\" class=\"float-right btn btn-danger\">Un-Enroll</button>\n        </li>\n      </div>\n    </ul>\n  </div>\n  <br>\n  <button class=\"btn btn-success\" (click)=\"logout()\">Logout</button>\n  &nbsp; &nbsp;\n  <a routerLink=\"/home\">Home</a>\n  &nbsp; &nbsp;\n  <a routerLink=\"/admin\" *ngIf=\"username==='admin'\">Admin Page</a>\n</div>\n"
 
 /***/ }),
 
@@ -1164,18 +1168,25 @@ var ProfileComponent = /** @class */ (function () {
         this.service
             .profile()
             .then(function (user) {
-            _this._id = user._id;
-            _this.username = user.username;
-            _this.firstName = user.firstName;
-            _this.lastName = user.lastName;
-            _this.email = user.email;
-            console.log(user._id);
+            if (user !== null) {
+                _this._id = user._id;
+                _this.username = user.username;
+                _this.firstName = user.firstName;
+                _this.lastName = user.lastName;
+                _this.email = user.email;
+                console.log(user._id);
+            }
+            else {
+                _this._id = -1;
+            }
         });
-        this.sectionService
-            .findSectionsForStudent()
-            .then(function (sections) { return _this.sections = sections; });
-        this.courseService.findAllCourses()
-            .then(function (courses) { return _this.courses = courses; });
+        if (this._id !== -1) {
+            this.sectionService
+                .findSectionsForStudent()
+                .then(function (sections) { return _this.sections = sections; });
+            this.courseService.findAllCourses()
+                .then(function (courses) { return _this.courses = courses; });
+        }
     };
     ProfileComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1213,7 +1224,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <h1>Register</h1>\n\n  <input [(ngModel)]=\"username\"\n         placeholder=\"username\"\n         class=\"form-control\"/>\n  <input [(ngModel)]=\"password\"\n         placeholder=\"password\"\n         class=\"form-control\"/>\n  <input [(ngModel)]=\"password2\"\n         placeholder=\"verify password\"\n         class=\"form-control\"/>\n  <button (click)=\"register(username, password, password2)\"\n          class=\"btn btn-primary btn-block\">\n    Register\n  </button>\n\n  <a routerLink=\"/login\">Login</a>\n  <a routerLink=\"/home\">Home</a>\n\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <h1>Register</h1>\n  <br>\n  <input [(ngModel)]=\"username\"\n         placeholder=\"username\"\n         class=\"form-control\"/>\n  <br>\n  <input [(ngModel)]=\"password\"\n         placeholder=\"password\"\n         class=\"form-control\"/>\n  <br>\n  <input [(ngModel)]=\"password2\"\n         placeholder=\"verify password\"\n         class=\"form-control\"/>\n  <br>\n  <button (click)=\"register(username, password, password2)\"\n          class=\"btn btn-primary btn-block\">\n    Register\n  </button>\n  <div class=\"float-left\">\n    <a routerLink=\"/login\">Login</a>\n  </div>\n  <div class=\"float-right\">\n    <a routerLink=\"/home\">Home</a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1303,7 +1314,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <h1>Sections for course: {{courseId}}</h1>\n  <ul class=\"list-group\">\n    <li *ngFor=\"let section of sections\" class=\"list-group-item\">\n      {{section.name}} {{section.seats}} {{section.maxSeats}}\n      <button *ngIf=\"section.seats>0\" (click)=\"enroll(section)\"\n              class=\"float-right btn btn-primary\">Enroll</button>\n    </li>\n  </ul>\n\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <a routerLink=\"/home\">Home</a>\n  <br>\n  <br>\n  <h1>Sections for course: {{courseId}}</h1>\n  <ul class=\"list-group\">\n    <li *ngFor=\"let section of sections\" class=\"list-group-item\">\n      {{section.name}} {{section.seats}} {{section.maxSeats}}\n      <button *ngIf=\"section.seats>0\" (click)=\"enroll(section)\"\n              class=\"float-right btn btn-primary\">Enroll</button>\n    </li>\n  </ul>\n\n</div>\n"
 
 /***/ }),
 
@@ -1522,8 +1533,9 @@ var SectionServiceClient = /** @class */ (function () {
             .then(function (response) { return response.json(); });
     };
     SectionServiceClient.prototype.enrollStudentInSection = function (sectionId) {
-        //const url = 'http://localhost:4000/api/student/section';
-        return fetch(this.STUDENT_URL_HEROKU, {
+        // const url = 'http://localhost:4000/api/student/section';
+        var url = this.SECTION_URL2_HEROKU + '/' + sectionId + '/enrollment';
+        return fetch(url, {
             method: 'post',
             credentials: 'include'
         });
@@ -1711,7 +1723,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <h1>\n    White Board\n  </h1>\n\n  <a routerLink=\"/login\">Login</a>\n  <a routerLink=\"/register\">Register</a>\n\n  <app-course-grid></app-course-grid>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div>\n  <div *ngFor=\"let course of courses\">\n    <ul class=\"list-group\">\n      <div *ngFor=\"let enrollment of sections\">\n        <li class=\"list-group-item\" *ngIf=\"course.id===enrollment.section.courseId\">\n          Enrolled:  <a routerLink='/course/{{course.id}}'>Course : {{course.title}} </a>\n        </li>\n      </div>\n    </ul>\n  </div>\n</div>\n<h1>\n    White Board\n  </h1>\n\n  <a routerLink=\"/login\">Login</a> &nbsp; &nbsp;<a routerLink=\"/register\">Register</a>&nbsp; &nbsp;<a routerLink=\"/profile\">Profile</a>\n\n  <app-course-grid></app-course-grid>\n</div>\n"
 
 /***/ }),
 
@@ -1726,6 +1738,10 @@ module.exports = "<div class=\"container-fluid\">\n  <h1>\n    White Board\n  </
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WhiteBoardComponent", function() { return WhiteBoardComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_course_service_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/course.service.client */ "./src/app/services/course.service.client.ts");
+/* harmony import */ var _services_section_service_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/section.service.client */ "./src/app/services/section.service.client.ts");
+/* harmony import */ var _services_user_service_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/user.service.client */ "./src/app/services/user.service.client.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1736,10 +1752,40 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
+
 var WhiteBoardComponent = /** @class */ (function () {
-    function WhiteBoardComponent() {
+    function WhiteBoardComponent(service, sectionService, courseService, router) {
+        this.service = service;
+        this.sectionService = sectionService;
+        this.courseService = courseService;
+        this.router = router;
+        this.user = {};
+        this.sections = [];
+        this.courses = [];
     }
     WhiteBoardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.service
+            .profile()
+            .then(function (user) {
+            if (user !== null) {
+                _this._id = user._id;
+                console.log(user._id);
+            }
+            else {
+                _this._id = -1;
+            }
+        });
+        if (this._id !== -1) {
+            this.sectionService
+                .findSectionsForStudent()
+                .then(function (sections) { return _this.sections = sections; });
+            this.courseService.findAllCourses()
+                .then(function (courses) { return _this.courses = courses; });
+        }
     };
     WhiteBoardComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1747,7 +1793,10 @@ var WhiteBoardComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./white-board.component.html */ "./src/app/white-board/white-board.component.html"),
             styles: [__webpack_require__(/*! ./white-board.component.css */ "./src/app/white-board/white-board.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_user_service_client__WEBPACK_IMPORTED_MODULE_4__["UserServiceClient"],
+            _services_section_service_client__WEBPACK_IMPORTED_MODULE_3__["SectionServiceClient"],
+            _services_course_service_client__WEBPACK_IMPORTED_MODULE_2__["CourseServiceClient"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], WhiteBoardComponent);
     return WhiteBoardComponent;
 }());
@@ -1774,7 +1823,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Widgets</h1>\n<div *ngFor=\"let widget of widgets\">\n  <div [ngSwitch]=\"widget.widgetType\">\n    <div *ngSwitchCase=\"'Heading'\">\n      <div [ngSwitch]=\"widget.size\">\n        <h1 *ngSwitchCase=\"'1'\">{{widget.text}}</h1>\n        <h2 *ngSwitchCase=\"'2'\">{{widget.text}}</h2>\n        <h3 *ngSwitchCase=\"'3'\">{{widget.text}}</h3>\n        <h4 *ngSwitchCase=\"'4'\">{{widget.text}}</h4>\n        <h5 *ngSwitchCase=\"'5'\">{{widget.text}}</h5>\n        <h6 *ngSwitchCase=\"'6'\">{{widget.text}}</h6>\n      </div>\n    </div>\n    <div *ngSwitchCase=\"'Link'\">\n      <a href=\"{{widget.href}}\">{{widget.text}}</a>\n    </div>\n    <div *ngSwitchCase=\"'List'\">\n      <h1>ListWidget</h1>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\"\n            *ngFor=\"let item of widget.listItem.split('\\n')\">\n          {{item}}\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<h1>Widgets</h1>\n<div *ngFor=\"let widget of widgets\">\n  <div [ngSwitch]=\"widget.widgetType\">\n    <div *ngSwitchCase=\"'Heading'\">\n      <div [ngSwitch]=\"widget.size\">\n        <h1 *ngSwitchCase=\"'1'\">{{widget.text}}</h1>\n        <h2 *ngSwitchCase=\"'2'\">{{widget.text}}</h2>\n        <h3 *ngSwitchCase=\"'3'\">{{widget.text}}</h3>\n      </div>\n    </div>\n    <div *ngSwitchCase=\"'Link'\">\n      <a href=\"{{widget.href}}\">{{widget.text}}</a>\n    </div>\n    <div *ngSwitchCase=\"'List'\">\n      <h1>ListWidget</h1>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\"\n            *ngFor=\"let item of widget.listItem.split('\\n')\">\n          {{item}}\n        </li>\n      </ul>\n    </div>\n    <div *ngSwitchCase=\"'Paragraph'\">\n      <p>{{widget.text}}</p>\n    </div>\n    <div *ngSwitchCase=\"'Image'\">\n      <img src=\"{{widget.src}}\">\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 

@@ -55,20 +55,28 @@ export class ProfileComponent implements OnInit {
     this.service
       .profile()
       .then(user => {
-      this._id = user._id;
-      this.username = user.username;
-      this.firstName = user.firstName;
-      this.lastName = user.lastName;
-      this.email = user.email;
-        console.log(user._id);
+        if (user !== null) {
+          this._id = user._id;
+          this.username = user.username;
+          this.firstName = user.firstName;
+          this.lastName = user.lastName;
+          this.email = user.email;
+          console.log(user._id);
+        } else {
+          this._id = -1;
+        }
+
       });
 
-    this.sectionService
-      .findSectionsForStudent()
-      .then(sections => this.sections = sections );
+    if (this._id !== -1) {
+      this.sectionService
+        .findSectionsForStudent()
+        .then(sections => this.sections = sections );
 
-    this.courseService.findAllCourses()
-      .then(courses => this.courses = courses);
+      this.courseService.findAllCourses()
+        .then(courses => this.courses = courses);
+    }
+
   }
 
 }

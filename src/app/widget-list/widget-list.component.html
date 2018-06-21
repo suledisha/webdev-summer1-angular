@@ -6,9 +6,6 @@
         <h1 *ngSwitchCase="'1'">{{widget.text}}</h1>
         <h2 *ngSwitchCase="'2'">{{widget.text}}</h2>
         <h3 *ngSwitchCase="'3'">{{widget.text}}</h3>
-        <h4 *ngSwitchCase="'4'">{{widget.text}}</h4>
-        <h5 *ngSwitchCase="'5'">{{widget.text}}</h5>
-        <h6 *ngSwitchCase="'6'">{{widget.text}}</h6>
       </div>
     </div>
     <div *ngSwitchCase="'Link'">
@@ -22,6 +19,12 @@
           {{item}}
         </li>
       </ul>
+    </div>
+    <div *ngSwitchCase="'Paragraph'">
+      <p>{{widget.text}}</p>
+    </div>
+    <div *ngSwitchCase="'Image'">
+      <img src="{{widget.src}}">
     </div>
   </div>
 </div>
